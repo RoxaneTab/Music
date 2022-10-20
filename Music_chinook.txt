@@ -1,0 +1,27 @@
+
+#Récupérer tous les albums
+SELECT * FROM albums;
+
+#Récupérer tous les albums dont le titre contient "Great"
+SELECT * FROM albums WHERE Title LIKE '%Great%';
+
+#Donner le nombre total d'albums contenus dans la base
+SELECT COUNT(*) FROM albums;
+
+#Supprimer tous les albums dont le nom contient "music"
+DELETE FROM albums WHERE title LIKE '%music%';
+
+#Récupérer tous les albums écrits par AC/DC
+SELECT albums.Title, artists.name FROM albums, artists on albums.ArtistId = artists.ArtistId WHERE artists.Name = "AC/DC";
+
+#Récupérer tous les titres des albums de AC/DC
+SELECT tracks.Name from tracks LEFT JOIN albums on tracks.AlbumId = albums.AlbumID LEFT JOIN artists on artists.ArtistId = albums.ArtistId WHERE artists.Name = "AC/DC";
+
+#Récupérer la liste des titres de l'album "Let There Be Rock"
+SELECT tracks.Name from tracks LEFT JOIN albums on albums.AlbumId = tracks.AlbumId WHERE albums.Title = "Let There Be Rock";
+
+#Afficher le prix de cet album ainsi que sa durée totale
+SELECT SUM(tracks.Milliseconds) as Total_millisconds, SUM(invoice_items.UnitPrice) FROM tracks LEFT JOIN albums on albums.AlbumID = tracks.albumID LEFT JOIN invoice_items on invoice_items.TrackId = tracks.TrackId WHERE albums.Title = "Let There Be Rock";
+
+#Afficher le coût de l'intégralité de la discographie de "Deep Purple"
+SELECT SUM(invoice_items.UnitPrice) FROM invoice_items LEFT join tracks on invoice_items.TrackId = tracks.TrackId LEFT join albums on albums.AlbumId = tracks.AlbumId LEFT join artists on artists.ArtistId = albums.ArtistId WHERE artists.Name = "Deep Purple";
